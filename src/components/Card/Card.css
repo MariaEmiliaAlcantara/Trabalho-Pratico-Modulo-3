@@ -1,0 +1,13 @@
+.cardContainer {
+  width: 80vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.card {
+  height: 30px;
+  width: 20%;
+  text-align: center; 
+}

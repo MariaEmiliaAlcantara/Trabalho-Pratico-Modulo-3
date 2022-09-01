@@ -1,9 +1,11 @@
+import { useParams } from "react-router-dom";
+
 export interface IFilterProps {
-  setFilterMonth: (month: string) => void;
-  setFilterYear: (year: string) => void;
+  handleFilterMonth: (month: string) => void;
+  handleFilterYear: (year: string) => void;
 }
 
-const Filter = ({ setFilterMonth, setFilterYear }: IFilterProps) => {
+const Filter = ({ handleFilterMonth, handleFilterYear }: IFilterProps) => {
   const months = [
     "Janeiro",
     "Fevereiro",
@@ -21,6 +23,10 @@ const Filter = ({ setFilterMonth, setFilterYear }: IFilterProps) => {
 
   const years = ["2020", "2021"];
 
+  const { date } = useParams();
+  let monthParams = date?.split("-")[1];
+  let yearParams = date?.split("-")[0];
+
   return (
     <div className="filter">
       <div className="monthFilter">
@@ -29,8 +35,9 @@ const Filter = ({ setFilterMonth, setFilterYear }: IFilterProps) => {
           <select
             name="month"
             id="month"
+            defaultValue={Number(monthParams) ? Number(monthParams) : 6}
             onChange={(e) => {
-              setFilterMonth(e.target.value);
+              handleFilterMonth(e.target.value);
             }}
           >
             {months.map((month, i) => {
@@ -49,7 +56,8 @@ const Filter = ({ setFilterMonth, setFilterYear }: IFilterProps) => {
           <select
             name="year"
             id="year"
-            onChange={(e) => setFilterYear(e.target.value)}
+            defaultValue={Number(yearParams) ? Number(yearParams) : 2020}
+            onChange={(e) => handleFilterYear(e.target.value)}
           >
             {years.map((year, i) => {
               return (

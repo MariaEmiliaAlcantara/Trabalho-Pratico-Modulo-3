@@ -6,8 +6,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/despesas" element={<Home />} />
-        <Route path="*" element={<Navigate to="/despesas" replace />} />
+        <Route path="/despesas/:date" element={<Home />} />
+        <Route path="*" element={<Navigate to="/despesas/2020-06" replace />} />
       </Routes>
     </BrowserRouter>
   );

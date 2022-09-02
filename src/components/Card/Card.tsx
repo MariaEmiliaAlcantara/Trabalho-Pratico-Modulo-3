@@ -21,7 +21,7 @@ const Card: React.FC<{ despesa: IApi }> = ({ despesa }) => {
         {despesa.dia}
       </TableCell>
       <TableCell className="card" align="center">
-        R${String(despesa.valor).replace(".", ",")}
+        R${despesa.valor.toFixed(2).replace(".", ",")}
       </TableCell>
     </TableRow>
   );

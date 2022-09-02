@@ -1,6 +1,4 @@
 import "./Header.css";
-import Filter from "../Filter/Filter";
-import { IApi } from "../../App";
 
 const Header = () => {
   return (

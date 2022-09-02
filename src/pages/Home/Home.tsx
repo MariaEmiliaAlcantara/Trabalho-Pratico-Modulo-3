@@ -32,9 +32,10 @@ function Home() {
 
   useEffect(() => {
     const { date } = params;
+    console.log(date);
     if (date) {
       let [year, month] = date.split("-");
-      month = month.length == 1 ? month : month[1];
+      month = Number(month) < 10 ? month[1] : month;
       setFilterYear(year);
       setFilterMonth(month);
     }
@@ -63,6 +64,7 @@ function Home() {
     } else {
       dateProcessed = `${filterYear}-${filterMonth}`;
     }
+    console.log(dateProcessed);
     return dateProcessed;
   }
   const dateFiltered = dateProcessed(filterMonth, filterYear);

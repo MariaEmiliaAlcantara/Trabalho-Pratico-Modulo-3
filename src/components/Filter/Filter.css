@@ -1,0 +1,11 @@
+.filter {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin: 30px
+}
+
+.selectFilter {
+  margin-left: 10px;
+  height: 40px;
+}

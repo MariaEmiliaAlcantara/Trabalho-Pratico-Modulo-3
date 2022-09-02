@@ -1,4 +1,8 @@
 import { useParams } from "react-router-dom";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import "./Filter.css";
 
 export interface IFilterProps {
   handleFilterMonth: (month: string) => void;
@@ -27,47 +31,55 @@ const Filter = ({ handleFilterMonth, handleFilterYear }: IFilterProps) => {
   let monthParams = date?.split("-")[1];
   let yearParams = date?.split("-")[0];
 
+  const handleChangeMonth = (event: SelectChangeEvent) => {
+    handleFilterMonth(event.target.value as string);
+  };
+
+  const handleChangeYear = (event: SelectChangeEvent) => {
+    handleFilterYear(event.target.value as string);
+  };
+
   return (
     <div className="filter">
       <div className="monthFilter">
-        <label>
+        <InputLabel>
           Mês
-          <select
+          <Select
+            className="selectFilter"
             name="month"
             id="month"
             defaultValue={Number(monthParams) ? Number(monthParams) : 6}
-            onChange={(e) => {
-              handleFilterMonth(e.target.value);
-            }}
+            onChange={handleChangeMonth}
           >
             {months.map((month, i) => {
               return (
-                <option key={i} value={i + 1}>
+                <MenuItem key={i} value={i + 1}>
                   {month}
-                </option>
+                </MenuItem>
               );
             })}
-          </select>
-        </label>
+          </Select>
+        </InputLabel>
       </div>
       <div className="yearFilter">
-        <label>
+        <InputLabel>
           Ano
-          <select
+          <Select
+            className="selectFilter"
             name="year"
             id="year"
             defaultValue={Number(yearParams) ? Number(yearParams) : 2020}
-            onChange={(e) => handleFilterYear(e.target.value)}
+            onChange={handleChangeYear}
           >
             {years.map((year, i) => {
               return (
-                <option key={i} value={year}>
+                <MenuItem key={i} value={year}>
                   {year}
-                </option>
+                </MenuItem>
               );
             })}
-          </select>
-        </label>
+          </Select>
+        </InputLabel>
       </div>
     </div>
   );

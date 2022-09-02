@@ -1,14 +1,29 @@
-import { IApi } from "../../App";
+import { IApi } from "../../pages/Home/Home";
 import "./Card.css";
+
+import TableCell from "@mui/material/TableCell";
+
+import TableRow from "@mui/material/TableRow";
 
 const Card: React.FC<{ despesa: IApi }> = ({ despesa }) => {
   return (
-    <div className="cardContainer">
-      <div className="card">{despesa.descricao}</div>
-      <div className="card">{despesa.categoria}</div>
-      <div className="card">{despesa.dia}</div>
-      <div className="card">R${String(despesa.valor).replace(".", ",")}</div>
-    </div>
+    <TableRow
+      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      className="cardContainer"
+    >
+      <TableCell className="card" align="center">
+        {despesa.descricao}
+      </TableCell>
+      <TableCell className="card" align="center">
+        {despesa.categoria}
+      </TableCell>
+      <TableCell className="card" align="center">
+        {despesa.dia}
+      </TableCell>
+      <TableCell className="card" align="center">
+        R${String(despesa.valor).replace(".", ",")}
+      </TableCell>
+    </TableRow>
   );
 };
 

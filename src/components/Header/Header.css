@@ -1,14 +1,4 @@
-.HeaderTop {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: grey;
-  width: 100vw;
-  height: 50px;
-}
-
-.HeaderMain {
-  margin-top: 30px;
-  display: flex;
-  justify-content: space-around;
+.header {
+  background-color: #618833;
+  color: white;
 }

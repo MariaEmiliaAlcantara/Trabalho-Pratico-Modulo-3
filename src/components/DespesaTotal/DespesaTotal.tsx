@@ -8,7 +8,9 @@ const DespesaTotal: React.FC<{ despesaTotal: number }> = ({ despesaTotal }) => {
     <Card>
       <CardContent className="despesaTotal">
         <Typography>
-          Despesa total: {despesaTotal.toFixed(2).replace(".", ",")}
+          <strong>
+            Despesa total: R${despesaTotal.toFixed(2).replace(".", ",")}
+          </strong>{" "}
         </Typography>
       </CardContent>
     </Card>

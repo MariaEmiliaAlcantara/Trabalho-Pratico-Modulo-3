@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-export default function Header() {
+export default function Header({ handleOnSignOut }: any) {
   return (
     <Box className="header" sx={{ flexGrow: 1 }}>
       <AppBar color="transparent" position="static">
@@ -13,7 +13,14 @@ export default function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Despesas pessoais
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button
+            onClick={() => {
+              handleOnSignOut(null);
+            }}
+            color="inherit"
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>

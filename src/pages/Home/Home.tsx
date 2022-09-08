@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
-
 import Filter from "../../components/Filter/Filter";
 import DespesaTotal from "../../components/DespesaTotal/DespesaTotal";
 import DespesasCards from "../../components/DespesasCards/DespesasCards";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { getUserEndpoint, IUser } from "../../backend";
+import LoginPage from "../Login/Login";
 
 export interface IApi {
   id: number;
@@ -19,20 +20,28 @@ function Home() {
   const [despesas, setDespesas] = useState<IApi[]>([]);
   const [filterMonth, setFilterMonth] = useState<string>("6");
   const [filterYear, setFilterYear] = useState<string>("2020");
+  const [user, setUser] = useState<IUser | null>(null);
   const params = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3001/despesas?_sort=dia")
-      .then((resp) => resp.json())
-      .then((data) => {
-        setDespesas(data);
-      });
+    if (user) {
+      fetch("http://localhost:3004/despesas?_sort=dia")
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data);
+          setDespesas(data);
+        })
+        .catch(() => console.log("erro ao consumir despesas"));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    getUserEndpoint().then(setUser, () => setUser(null));
   }, []);
 
   useEffect(() => {
     const { date } = params;
-    console.log(date);
     if (date) {
       let [year, month] = date.split("-");
       month = Number(month) < 10 ? month[1] : month;
@@ -64,7 +73,6 @@ function Home() {
     } else {
       dateProcessed = `${filterYear}-${filterMonth}`;
     }
-    console.log(dateProcessed);
     return dateProcessed;
   }
   const dateFiltered = dateProcessed(filterMonth, filterYear);
@@ -90,17 +98,31 @@ function Home() {
   const arrayDataFiltered = dataFiltered(despesas, dateFiltered);
   const despesaTotal = calcularDespesaTotal(arrayDataFiltered);
 
-  return (
-    <>
-      <Header />
-      <Filter
-        handleFilterMonth={handleFilterMonth}
-        handleFilterYear={handleFilterYear}
-      />
-      <DespesaTotal despesaTotal={despesaTotal} />
-      <DespesasCards despesas={arrayDataFiltered} />
-    </>
-  );
+  console.log(arrayDataFiltered);
+
+  const handleOnSignOut = (param: any) => {
+    setUser(param);
+  };
+
+  if (user) {
+    return (
+      <>
+        <Header handleOnSignOut={handleOnSignOut} />
+        <Filter
+          handleFilterMonth={handleFilterMonth}
+          handleFilterYear={handleFilterYear}
+        />
+        <DespesaTotal despesaTotal={despesaTotal} />
+        <DespesasCards despesas={arrayDataFiltered} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <LoginPage onSignIn={setUser} />
+      </>
+    );
+  }
 }
 
 export default Home;

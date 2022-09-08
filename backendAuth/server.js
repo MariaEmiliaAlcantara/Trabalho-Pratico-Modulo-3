@@ -23,27 +23,27 @@ server.use(
   })
 );
 
-function findUser({ email, senha }) {
+function findUser({ email, password }) {
   return userdb.users.find(
-    (user) => user.email === email && user.senha === senha
+    (user) => user.email === email && user.password === password
   );
 }
 
-server.post("/sessao/criar", (req, res) => {
-  const { email, senha } = req.body;
-  const user = findUser({ email, senha });
+server.post("/auth/login", (req, res) => {
+  const { email, password } = req.body;
+  const user = findUser({ email, password });
   if (!user) {
     const status = 401;
     res
       .status(status)
-      .json({ status, message: "E-mail não encontrado ou senha incorreta" });
+      .json({ status, message: "E-mail não encontrado ou password incorreta" });
   } else {
-    req.session.user = { nome: user.nome, email: user.email };
+    req.session.user = { name: user.name, email: user.email };
     res.status(200).json(req.session.user);
   }
 });
 
-server.get("/sessao/usuario", (req, res) => {
+server.get("/auth/user", (req, res) => {
   if (req.session.user) {
     res.status(200).json(req.session.user);
   } else {
@@ -51,7 +51,7 @@ server.get("/sessao/usuario", (req, res) => {
   }
 });
 
-server.post("/sessao/finalizar", (req, res) => {
+server.post("/auth/logout", (req, res) => {
   if (req.session.user) {
     req.session.destroy(function (err) {
       res.status(200).json({ message: "Você saiu do sistema" });
@@ -61,7 +61,7 @@ server.post("/sessao/finalizar", (req, res) => {
   }
 });
 
-server.use(/^(?!\/sessao).*$/, (req, res, next) => {
+server.use(/^(?!\/auth).*$/, (req, res, next) => {
   if (!req.session.user) {
     const status = 401;
     res.status(status).json({ status, message: "Não autenticado" });

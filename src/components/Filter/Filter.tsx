@@ -3,6 +3,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import "./Filter.css";
+import { Co2Sharp } from "@mui/icons-material";
 
 export interface IFilterProps {
   handleFilterMonth: (month: string) => void;
@@ -31,6 +32,10 @@ const Filter = ({ handleFilterMonth, handleFilterYear }: IFilterProps) => {
   let monthParams = date?.split("-")[1];
   let yearParams = date?.split("-")[0];
 
+  if (monthParams && Number(monthParams) <= 9) {
+    monthParams = monthParams[1];
+  }
+
   const handleChangeMonth = (event: SelectChangeEvent) => {
     handleFilterMonth(event.target.value as string);
   };
@@ -48,7 +53,7 @@ const Filter = ({ handleFilterMonth, handleFilterYear }: IFilterProps) => {
             className="selectFilter"
             name="month"
             id="month"
-            defaultValue={Number(monthParams) ? Number(monthParams) : 6}
+            defaultValue={monthParams ? monthParams : "6"}
             onChange={handleChangeMonth}
           >
             {months.map((month, i) => {
@@ -68,7 +73,7 @@ const Filter = ({ handleFilterMonth, handleFilterYear }: IFilterProps) => {
             className="selectFilter"
             name="year"
             id="year"
-            defaultValue={Number(yearParams) ? Number(yearParams) : 2020}
+            defaultValue={yearParams ? yearParams : "2020"}
             onChange={handleChangeYear}
           >
             {years.map((year, i) => {

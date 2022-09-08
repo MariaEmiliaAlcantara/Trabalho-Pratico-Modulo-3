@@ -26,9 +26,11 @@ const DespesasCards: React.FC<{ despesas: IApi[] }> = ({ despesas }) => {
               <Card key={despesa.id} despesa={despesa} />
             ))
           ) : (
-            <TableCell>
-              Não há despesas cadastradas referentes a este período
-            </TableCell>
+            <TableRow>
+              <TableCell>
+                Não há despesas cadastradas referentes a este período
+              </TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>
